@@ -1,4 +1,40 @@
-### **BILL OF MATERIALS (BOM)**
+# Flappy Bird
+## Introducere
+**Flappy Bird** este un joc arcade simplu, dar captivant, în care jucătorul controlează o pasăre ce trebuie să zboare printre obstacole (de obicei, tuburi verticale). Jocul este cunoscut pentru mecanica sa simplă: pasărea se ridică atunci când utilizatorul apasă un buton și coboară automat din cauza gravitației simulate. Scopul este să se evite coliziunea cu obstacolele, în timp ce jucătorul adună puncte.
+
+Acest proiect constă în dezvoltarea unei versiuni mai simplificate a preacunoscutului joc **Flappy Bird** folosind concepte învățate în cadrul cursurilor și laboratoarelor de **Proiectare cu Microprocesoare (PM)**, având la bază o plăcuță de **Arduino** și diverse **componente electronice** care vor forma dispozitivul final.
+
+**Comparativ cu versiunea originală**, varianta mea a jocului nu se va folosi de gravitație în cazul în care jucătorul nu va mai apăsa pentru a face pasărea să zboare, ci poziția acesteia va rămâne pe loc. **Controlul** păsării se va baza pe folosirea unui **joystick** unde, pentru a ridica pasărea, maneta se va da în sus, iar pentru a coborî pasărea, maneta se va da în jos. Mai mult, jucătorul va putea apăsa un **buton** pentru **a opri și reporni** jocul, iar în cazul în care jucătorul pierde și are un scor destul de mare, poate să îl păstreze prin **introducerea de la tastatură** a numelui său, care o să apară apoi în meniul de **"//high score//"**, pe care îl putem accesa prin apăsarea altui **buton**.
+
+Acest proiect îmi oferă oportunitatea de a aplica ceea ce am învățat până acum, îmbinând **concepte de hardware și noțiuni de software**, creând astfel o **experiență interesantă și educativă** pentru mine și **distractivă** pentru ceilalți sau chiar un **punct de plecare** pentru amatorii din domeniul electronicii.
+
+## Descriere generală
+### Rolul componentelor și interacțiunile între acestea:
+  * Elementul central al proiectului îl reprezintă o plăcuță de **Arduino UNO** ce are rolul de **a comunica** cu celelalte componente
+  * Pentru **a vizualiza** jocul, prin intermediul plăcuței de Arduino, se vor transmite către un **ecran LCD** date prin intermediul **protocolului SPI**
+  * Pentru a face jocul mai **dinamic**, la acțiuni precum **mișcarea păsării** în sus sau în jos, dar și atunci când se lovește, o să se audă anumite **efecte sonore**, acestea fiind transmise către un **amplificator cu potențiometru** (modularea volumului), iar apoi către **speaker**
+  * Cât timp jocul se derulează, un **LED verde** se va aprinde încet-încet, iar apoi se va stinge încet-încet, iar când jucătorul e în meniu sau a pierdut, un **LED rosu** se va aprinde și stinge în același mod
+  * Pentru **a începe** jocul, se va apăsa un **buton**, care va fi folosit și pentru a-l opri și reporni 
+  * Pentru **a deplasa** pasărea, se folosește un **joystick**, iar poziția acestuia va fi transmisă către plăcuță, unde va fi interpretată cu ajutorul **convertorului analog-digital (ADC)**
+  * Jocul permite vizualizarea **scorului** (de câte tuburi a trecut pasărea), dar și a **timpului** trecut în încercarea actuală **(timer)**
+  * După ce jucătorul se lovește de un tub și astfel își încheie tura, acesta, dacă are un scor destul de mare, îl poate păstra salvându-l în **clasament**, introducându-și numele de la **tastatura laptop-ului (UART)**
+  * Când jucătorul se află în **meniul principal**, pe lângă funcția de a începe jocul, poate vizualiza și clasamentul global prin apăsarea altui **buton** decât cel de start
+
+**Schema bloc a dispozitivului:**
+
+![schbloc](https://github.com/user-attachments/assets/c50cc914-41ef-49d4-97b2-af08b49f58a8)
+
+## Hardware Design
+### Lista de componente ale proiectului:
+  * **Arduino UNO** cu ATMega328P
+  * Modul **LCD** SPI de 2.8” (240×320) cu driver ILI9341
+  * 1 **speaker** 4 ohm, 3 W
+  * Modul **amplificator** audio PAM8403 cu potențiometru
+  * Modul **joystick** cu două axe XY HW-504
+  * breadboards, butoane, LED-uri, cabluri, rezistențe
+
+
+## **BILL OF MATERIALS (BOM)**
 
 |**Denumire componentă**|**Link**|**Nr. bucăți**|
 |-------|-----|-----|
@@ -14,3 +50,7 @@
 |Modul LCD 2.8'' cu SPI|https://www.optimusdigital.ro/en/lcds/3544-modul-lcd-spi-de-28-cu-touchscreen-controller-ili9341-i-xpt2046-240x320-px.html?search_query=Modul+LCD+de+2.8%27%27+cu+SPI+%C8%99i+Controller+ILI9341+%28240x320+px%29&results=3|1|
 
 (Plăcuța, butoanele, rezistențele și LED-urile provin din același set și au același link)
+
+## Schema electrica:
+![schemaelectrica](https://github.com/user-attachments/assets/d0e753bc-31a2-4a77-a277-78dffa2cdc95)
+
