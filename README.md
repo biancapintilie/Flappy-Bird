@@ -54,3 +54,29 @@ Acest proiect îmi oferă oportunitatea de a aplica ceea ce am învățat până
 ## Schema electrica:
 ![schemaelectrica](https://github.com/user-attachments/assets/d0e753bc-31a2-4a77-a277-78dffa2cdc95)
 
+
+## Funcționalitatea hardware:
+
+Toate componentele sunt conectate la **Arduino UNO**:
+
+- **LCD**:
+  - comunică cu plăcuța prin intermediul protocolului **SPI** pentru **a afișa** jocul
+  - pinii ecranului au nevoie la intrare de 3.3V, dar pinii Arduino dau 5V, așa că am introdus **rezistențe de 10K** pentru a limita tensiunea care va ajunge la LCD
+- **Joystick**:
+  - comunică cu plăcuța prin pinii de **ADC**
+  - **controlează** pasărea în timpul jocului 
+- **Butoane**:
+  - un buton **pornește** jocul, iar în timpul acestuia poate să-l **oprească** și să-l **repornească** prin intermediul unei **întreruperi hardware**
+  - alt buton poate să **afișeze** clasamentul de highscore
+- **Amplificator + Speaker**:
+  - redă **efecte sonore** în cadrul jocului
+  - sunetul este transmis către **amplificator**, unde va fi modulat cu ajutorul unui **potențiometru**, iar apoi va ajunge mai departe la **speaker**
+- **LED-uri**:
+  - un **LED verde** se va aprinde și stinge continuu semnalizând că jocul este în **desfășurare**
+  - un **LED roșu** se va aprinde și stinge continuu semnalizând că jocul ori nu a început, ori s-a terminat
+  - aprinderea și stingerea LED-urilor va fi controlată prin **PWM**
+  - pentru a nu se arde am adăugat în serie câte o **rezistență de 220Ω**
+- **Laptop**:
+  - utilizat pentru a **transfera codul** către plăcuța Arduino
+  - prin intermediul protocolului **UART** se va citi de la **tastatura** acestuia numele nou prin care se va salva highscore-ul
+
