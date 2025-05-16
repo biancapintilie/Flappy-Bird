@@ -55,23 +55,24 @@ Acest proiect îmi oferă oportunitatea de a aplica ceea ce am învățat până
 ![schemaelectrica](https://github.com/user-attachments/assets/d0e753bc-31a2-4a77-a277-78dffa2cdc95)
 
 
-## Funcționalitatea hardware:
+## Funcționalitatea hardware și pinii folosiți:
 
 Toate componentele sunt conectate la **Arduino UNO**:
 
 - **LCD**:
   - comunică cu plăcuța prin intermediul protocolului **SPI** pentru **a afișa** jocul
   - pinii ecranului au nevoie la intrare de 3.3V, dar pinii Arduino dau 5V, așa că am introdus **rezistențe de 10K** pentru a limita tensiunea care va ajunge la LCD
-  - pentru protocolul SPI este nevoie de pinii D10, D11, D13, aceștia fiind CS, MOSI, respectiv SCK
-  - nu avem nevoie de pinul D12 (MISO) întrucât nu trebuie să trimitem nimic de la LCD la plăcuță
-  - pinul D9 este folosit ca D/C care indică dacă datele primite prin SPI sunt comenzi sau date
-  - pinul D8 este folosit ca RESET pentru a reseta LCD-ul la pornire
+  - pentru protocolul SPI este nevoie de pinii **D10, D11, D13**, aceștia fiind **CS, MOSI, respectiv SCK**
+  - nu avem nevoie de pinul **D12** (MISO) întrucât nu trebuie să trimitem nimic de la LCD la plăcuță
+  - pinul **D9** este folosit ca **D/C** care indică dacă datele primite prin SPI sunt comenzi sau date
+  - pinul **D8** este folosit ca **RESET** pentru a reseta LCD-ul la pornire
 - **Joystick**:
   - comunică cu plăcuța prin pinii de **ADC** (**A0** -  pentru Rx, **A1** - pentru Ry)
   - **controlează** pasărea în timpul jocului 
 - **Butoane**:
   - un buton **pornește** jocul, iar în timpul acestuia poate să-l **oprească** și să-l **repornească** prin intermediul unei **întreruperi hardware** (**D2** - pin pentru întreruperi hardware)
   - alt buton poate să **afișeze** clasamentul de highscore (**D4** - pin de intrare)
+  - pentru a nu avea cazuri de fire în aer activez **rezistențele de pull-up** pentru fiecare buton
 - **Amplificator + Speaker**:
   - redă **efecte sonore** în cadrul jocului
   - sunetul este transmis către **amplificator**, unde va fi modulat cu ajutorul unui **potențiometru**, iar apoi va ajunge mai departe la **speaker** (**D3** - funcția tone() pe care o folosesc ca să redau sunete are nevoie de timer2, care este valabil prin acest pin)
