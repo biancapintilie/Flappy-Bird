@@ -34,7 +34,7 @@ Acest proiect îmi oferă oportunitatea de a aplica ceea ce am învățat până
   * breadboards, butoane, LED-uri, cabluri, rezistențe
 
 
-## **BILL OF MATERIALS (BOM)**
+## **Bill Of Materials (BOM)**
 
 |**Denumire componentă**|**Link**|**Nr. bucăți**|
 |-------|-----|-----|
