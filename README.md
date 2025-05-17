@@ -94,3 +94,9 @@ Toate componentele sunt conectate la **Arduino UNO**:
 
   * **"SPI.h", "Adafruit_GFX.h", "Adafruit_ILI9341.h"** - aceste biblioteci îmi oferă posibilitatea de a comunica cu LCD-ul, dar îmi și facilitează modalitățile prin care pot scrie cuvinte (meniul principal, meniul de highscore) sau să afișez jocul (pasărea, tuburile) așa cum îmi doresc
 
+**Elemente de noutate**
+Față de versiunea originală a jocului, proiectul meu are câteva elemente în plus:
+  * **mișcarea păsării** - în jocul de bază, ca să ții pasărea într-o anumită poziție trebuia să apeși continuu pe ecran, aplicându-se legile gravitației, însă în versiunea mea, prin mișcarea joystick-ului în sus și în jos, nu doar că se duce în acea poziție, dar și rămâne acolo, fără a mai fi nevoie de interacțiunea jucătorului
+  * **oprirea/repornirea jocului** - în versiunea originală, odată ce ai început jocul nu te mai poți opri decât dacă pierzi, în schimb jocul meu oferă opțiunea de a-l pune pe pauză și de a-l reporni prin apăsarea unui simplu buton
+  * **LED-uri** - în implementarea proiectului am adăugat două LED-uri care îi arată jucătorului dacă este în timpul jocului (un LED verde se aprinde și stinge continuu) sau în afara lui (un LED roșu se aprinde și stinge continuu)
+
