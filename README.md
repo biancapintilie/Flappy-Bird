@@ -88,3 +88,9 @@ Toate componentele sunt conectate la **Arduino UNO**:
 ## Asamblarea întregului circuit + testare funcționare piese (LCD):
 ![flappybird_pozacircuit](https://github.com/user-attachments/assets/5aa83140-0784-44a8-92f8-1f7e8dad79ea)
 
+## Software Design
+
+**Biblioteci folosite:**
+
+  * **"SPI.h", "Adafruit_GFX.h", "Adafruit_ILI9341.h"** - aceste biblioteci îmi oferă posibilitatea de a comunica cu LCD-ul, dar îmi și facilitează modalitățile prin care pot scrie cuvinte (meniul principal, meniul de highscore) sau să afișez jocul (pasărea, tuburile) așa cum îmi doresc
+
