@@ -85,3 +85,5 @@ Toate componentele sunt conectate la **Arduino UNO**:
   - utilizat pentru a **transfera codul** către plăcuța Arduino
   - prin intermediul protocolului **UART** se va citi de la **tastatura** acestuia numele nou prin care se va salva highscore-ul (**D0, D1** - sunt deja conectați la cablul de date)
 
+## Asamblarea întregului circuit + testare funcționare piese (LCD):
+![flappybird_pozacircuit](https://github.com/user-attachments/assets/7a2887e6-31d6-4571-9f21-67a81efa634c)
