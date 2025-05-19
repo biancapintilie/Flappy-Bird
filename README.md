@@ -86,7 +86,7 @@ Toate componentele sunt conectate la **Arduino UNO**:
   - prin intermediul protocolului **UART** se va citi de la **tastatura** acestuia numele nou prin care se va salva highscore-ul (**D0, D1** - sunt deja conectați la cablul de date)
 
 ## Asamblarea întregului circuit + testare funcționare piese (LCD):
-![flappybird_pozacircuit](https://github.com/user-attachments/assets/5aa83140-0784-44a8-92f8-1f7e8dad79ea)
+[![flappybird_pozacircuit](https://github.com/user-attachments/assets/5aa83140-0784-44a8-92f8-1f7e8dad79ea)](https://youtube.com/shorts/Ube13TH9jZk?feature=share)
 
 ## Software Design
 
@@ -100,4 +100,3 @@ Față de versiunea originală a jocului, proiectul meu are câteva elemente în
   * **mișcarea păsării** - în jocul de bază, ca să ții pasărea într-o anumită poziție trebuia să apeși continuu pe ecran, aplicându-se legile gravitației, însă în versiunea mea, prin mișcarea joystick-ului în sus și în jos, nu doar că se duce în acea poziție, dar și rămâne acolo, fără a mai fi nevoie de interacțiunea jucătorului
   * **oprirea/repornirea jocului** - în versiunea originală, odată ce ai început jocul nu te mai poți opri decât dacă pierzi, în schimb jocul meu oferă opțiunea de a-l pune pe pauză și de a-l reporni prin apăsarea unui simplu buton
   * **LED-uri** - în implementarea proiectului am adăugat două LED-uri care îi arată jucătorului dacă este în timpul jocului (un LED verde se aprinde și stinge continuu) sau în afara lui (un LED roșu se aprinde și stinge continuu)
-
