@@ -130,10 +130,10 @@ Față de versiunea originală a jocului, proiectul meu are câteva elemente în
    * **Întreruperi**
      
 Am configurat butoanele conectate la pinul PD2, respectiv PD4, ca intrări și le-am activat rezistențele de pull-up. În cazul butonului de pe pinul PD2, i-am activat întreruperea externă care va avea loc pe falling edge pentru a gestiona schimbările de stare în joc:
-      * dacă game_state este 0, jocul începe, resetând scorul și fundalul
-      * dacă game_state este 4, trece la actualizarea tabelului de highscore
-      * în alte cazuri, schimbă între start și pauză
-      * de asemenea, resetează starea LED-urilor și valorile PWM asociate.
+* dacă game_state este 0, jocul începe, resetând scorul și fundalul
+* dacă game_state este 4, trece la actualizarea tabelului de highscore
+* în alte cazuri, schimbă între start și pauză
+* de asemenea, resetează starea LED-urilor și valorile PWM asociate.
 
 ![setup_butoane](https://github.com/user-attachments/assets/534e9483-faf0-4212-8800-91dbbdabab76)
 
@@ -173,17 +173,17 @@ Procesul se desfășoară astfel:
   * **ADC**
     
 Folosesc Convertorul Analog-Digital pentru a citi poziția joystick-ului, astfel modificând poziția păsării:
-* am configurat pinul A1 ca intrare pentru a citi semnalul analogic de la joystick
-* utilizez funcția analogRead(A1) pentru a converti tensiunea de pe pinul A1 într-o valoare între 0 și 1023 (această valoare reprezintă poziția joystick-ului pe axa Y)
-* după câteva încercări, am constatat că atunci când dau în jos joystick-ul primesc valori apropiate de 0 (mai mici decât 10), iar când îl dau în sus primesc valori apropiate de 1023 (mai mari decât 1010)
-* cu aceste valori am reușit să creez o mișcare decentă pentru pasăre, limitându-i înălțimea când aceasta ar fi putut ieși din ecran
+- am configurat pinul A1 ca intrare pentru a citi semnalul analogic de la joystick
+- utilizez funcția analogRead(A1) pentru a converti tensiunea de pe pinul A1 într-o valoare între 0 și 1023 (această valoare reprezintă poziția joystick-ului pe axa Y)
+- după câteva încercări, am constatat că atunci când dau în jos joystick-ul primesc valori apropiate de 0 (mai mici decât 10), iar când îl dau în sus primesc valori apropiate de 1023 (mai mari decât 1010)
+- cu aceste valori am reușit să creez o mișcare decentă pentru pasăre, limitându-i înălțimea când aceasta ar fi putut ieși din ecran
 
   ![input_joystick](https://github.com/user-attachments/assets/a1984cc9-1866-42c1-8418-7d380d3c41c9)
 
   ![miscarea_pasarii](https://github.com/user-attachments/assets/71147885-8989-4a3c-adc9-a42b50313945)
 
 
-  * **Sunete**
+ * **Sunete**
     
 Am folosit funcția tone() pentru a genera semnale audio atunci când am trecut cu bine de turnuri (am generat un semnal cu o frecvență ridicată timp de 100ms), dar și atunci când m-am lovit de acestea (am generat un semnal cu o frecvență mai scăzută timp de 100ms).
 
