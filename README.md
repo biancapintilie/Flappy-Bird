@@ -51,7 +51,7 @@ Acest proiect îmi oferă oportunitatea de a aplica ceea ce am învățat până
 
 (Plăcuța, butoanele, rezistențele și LED-urile provin din același set și au același link)
 
-## Schema electrica:
+## Schema electrică:
 ![schemaelectrica](https://github.com/user-attachments/assets/d0e753bc-31a2-4a77-a277-78dffa2cdc95)
 
 
@@ -88,7 +88,7 @@ Toate componentele sunt conectate la **Arduino UNO**:
 ## Asamblarea întregului circuit + testare funcționare piese (LCD):
 (Click pe poză pentru video)
 
-[![flappybird_pozacircuit](https://github.com/user-attachments/assets/5aa83140-0784-44a8-92f8-1f7e8dad79ea)](https://youtube.com/shorts/Ube13TH9jZk?feature=share)
+[![flappybird_pozacircuit](https://github.com/user-attachments/assets/5aa83140-0784-44a8-92f8-1f7e8dad79ea)](https://youtube.com/shorts/IP-DghO4OIs?feature=share)
 
 ## Software Design
 
@@ -96,9 +96,120 @@ Toate componentele sunt conectate la **Arduino UNO**:
 
   * **"SPI.h", "Adafruit_GFX.h", "Adafruit_ILI9341.h"** - aceste biblioteci îmi oferă posibilitatea de a comunica cu LCD-ul, dar îmi și facilitează modalitățile prin care pot scrie cuvinte (meniul principal, meniul de highscore) sau să afișez jocul (pasărea, tuburile) așa cum îmi doresc
 
+**Funcții folosite din bibliotecile menționate:**
+  * **fillScreen()**: umple ecranul în întregime cu o culoare specificată
+  * **fillRect()**: pornind de la o poziție specificată, umple un dreptunghi de lungime width și înălțime height cu o anumită culoare aleasă
+  * **setTextColor()**: setează culoarea textului
+  * **setTextSize()**: setează mărimea textului
+  * **setCursor()**: mută cursorul la o poziție specificată
+  * **print()/println()**: afișează textul pe LCD
+
+**Meniul principal**
+
+![functie_main_menu](https://github.com/user-attachments/assets/c31327d9-846d-4a07-af2a-ee39f90e48de)
+
+![poza_meniuprincipal](https://github.com/user-attachments/assets/84c92b49-ffca-4cdb-99fe-98cf0aeab61e)
+
+
+**Pasărea**
+
+![functie_desenare_pasare](https://github.com/user-attachments/assets/35f351f6-2db3-493f-a423-7bfc5ab8b0e2)
+
+![poza_pasare](https://github.com/user-attachments/assets/6404eecc-dcf1-4d6d-ae32-0125851f8770)
+
+
 **Elemente de noutate**
 
 Față de versiunea originală a jocului, proiectul meu are câteva elemente în plus:
   * **mișcarea păsării** - în jocul de bază, ca să ții pasărea într-o anumită poziție trebuia să apeși continuu pe ecran, aplicându-se legile gravitației, însă în versiunea mea, prin mișcarea joystick-ului în sus și în jos, nu doar că se duce în acea poziție, dar și rămâne acolo, fără a mai fi nevoie de interacțiunea jucătorului
   * **oprirea/repornirea jocului** - în versiunea originală, odată ce ai început jocul nu te mai poți opri decât dacă pierzi, în schimb jocul meu oferă opțiunea de a-l pune pe pauză și de a-l reporni prin apăsarea unui simplu buton
   * **LED-uri** - în implementarea proiectului am adăugat două LED-uri care îi arată jucătorului dacă este în timpul jocului (un LED verde se aprinde și stinge continuu) sau în afara lui (un LED roșu se aprinde și stinge continuu)
+
+### Funcționalități laborator
+
+   * **Întreruperi**
+     
+Am configurat butoanele conectate la pinul PD2, respectiv PD4, ca intrări și le-am activat rezistențele de pull-up. În cazul butonului de pe pinul PD2, i-am activat întreruperea externă care va avea loc pe falling edge pentru a gestiona schimbările de stare în joc:
+      * dacă game_state este 0, jocul începe, resetând scorul și fundalul
+      * dacă game_state este 4, trece la actualizarea tabelului de highscore
+      * în alte cazuri, schimbă între start și pauză
+      * de asemenea, resetează starea LED-urilor și valorile PWM asociate.
+
+![setup_butoane](https://github.com/user-attachments/assets/534e9483-faf0-4212-8800-91dbbdabab76)
+
+![ISR](https://github.com/user-attachments/assets/26f8b735-34d8-4505-968b-51d625c4f87c)
+
+
+   * **PWM**
+     
+Am configurat pinii PD5 și PD6 ca ieșiri PWM pentru controlul LED-urilor, utilizând modul Fast PWM cu un prescaler de 64.
+
+Funcția **fade_leds**:
+ * controlează luminozitatea LED-urilor roșu (PD5) și verde (PD6) prin variarea graduală a valorii de umplere (duty cycle) între 0 și 255
+ * cât timp jocul rulează (game_state = 1) LED-ul verde este activ, iar în restul de cazuri (în meniul principal, în meniul de highscore, când jocul este pe pauză, când jocul s-a încheiat) LED-ul roșu este activ
+ * creșterea și descreșterea valorilor din OCR0A și OCR0B simulează un efect de fade (aprindere/stingere graduală)
+
+![setup_leduri](https://github.com/user-attachments/assets/e270e599-3c99-4286-bd83-d762601da760)
+
+![functie_leduri](https://github.com/user-attachments/assets/e800b2f0-5365-4615-adb3-f3bd5e1d3cf3)
+
+
+**Alte funcționalități:**
+
+  * **UART**
+    
+În cod, folosesc UART pentru a primi un nume de la utilizator printr-o conexiune serială.
+
+Procesul se desfășoară astfel:
+* atunci când jocul este în starea game_state = 5 (salvare highscore), programul intră într-o buclă în care așteaptă date de la tastatură prin portul serial
+* după ce datele sunt disponibile, folosesc funcția Serial.readStringUntil() pentru a citi numele jucătorului introdus de la tastatura laptop-ului
+* numele citit îl utilizez pentru a actualiza tabela de highscore (names[] și scores[]), apelând funcția update_highscore()
+* funcția update_highscore() caută poziția unde trebuie adăugat noul scor, apoi mută celelalte scoruri pentru a-i face loc astfel încât să fie în ordine descrescătoare
+
+![uart](https://github.com/user-attachments/assets/cb6e538c-be8a-4d87-aa39-e33b363d68d8)
+
+![update_highscore](https://github.com/user-attachments/assets/581218bb-d160-45f8-92a1-d9d032eed7c6)
+
+  * **ADC**
+    
+Folosesc Convertorul Analog-Digital pentru a citi poziția joystick-ului, astfel modificând poziția păsării:
+* am configurat pinul A1 ca intrare pentru a citi semnalul analogic de la joystick
+* utilizez funcția analogRead(A1) pentru a converti tensiunea de pe pinul A1 într-o valoare între 0 și 1023 (această valoare reprezintă poziția joystick-ului pe axa Y)
+* după câteva încercări, am constatat că atunci când dau în jos joystick-ul primesc valori apropiate de 0 (mai mici decât 10), iar când îl dau în sus primesc valori apropiate de 1023 (mai mari decât 1010)
+* cu aceste valori am reușit să creez o mișcare decentă pentru pasăre, limitându-i înălțimea când aceasta ar fi putut ieși din ecran
+
+  ![input_joystick](https://github.com/user-attachments/assets/a1984cc9-1866-42c1-8418-7d380d3c41c9)
+
+  ![miscarea_pasarii](https://github.com/user-attachments/assets/71147885-8989-4a3c-adc9-a42b50313945)
+
+
+  * **Sunete**
+    
+Am folosit funcția tone() pentru a genera semnale audio atunci când am trecut cu bine de turnuri (am generat un semnal cu o frecvență ridicată timp de 100ms), dar și atunci când m-am lovit de acestea (am generat un semnal cu o frecvență mai scăzută timp de 100ms).
+
+![sunete](https://github.com/user-attachments/assets/4ce6d670-5139-4aec-a26e-772d91c7d2f6)
+
+  
+  * **SPI**
+    
+Am folosit în majoritatea codului protocolul SPI fiind necesar în afișarea întregului joc pe ecranul LCD.
+
+De la afișarea meniurilor și până la desenarea pieselor jocului, anume pasărea și turnurile, toate acestea le-am realizat utilizând funcții legate de acest protocol.
+
+Prin utilizarea variabilei **game_state**, în funcție de valoarea acesteia, pot să determin ce stare din joc să afișez în acel moment.
+
+### Optimizări:
+* creare de funcții pentru evitarea codului repetitiv (show_main_menu(), show_highscore_menu(), etc.)
+* micșorarea size-ului variabilelor (int8_t sau int16_t în loc de int pentru a micșora memoria totală a programului)
+* logica PWM pentru controlul LED-urilor (în loc să folosesc cicluri software pentru controlul intensității, care ar fi blocat loop-ul, am utilizat hardware PWM: OCR0A, OCR0B)
+* manipularea eficientă a întreruperilor (prin utilizarea întreruperii hardware de la butonul roșu am evitat blocarea buclei principale)
+
+## Concluzii
+
+Proiectul a reprezentat o oportunitate excelentă de a îmbina cunoștințele teoretice și practice dobândite în timpul orelor de curs și laboratoarelor, punându-mi în valoare atât abilitățile software, cât și cele hardware. Realizarea efectivă a jocului a fost o experiență unică și captivantă, care mi-a permis să explorez interacțiunea dintre componentele fizice și software, ducând la un rezultat funcțional de care m-am putut bucura.
+
+## Bibliografie/Resurse
+ * optimusdigital.ro
+ * sigmanortec.ro
+ * cleste.ro
+ * ATmega328P Datasheet
